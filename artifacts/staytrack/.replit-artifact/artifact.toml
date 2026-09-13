@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "StayTrack Property Operations"
+description = "A cloud-ready property operations system for occupancy, finance, maintenance, scenario analysis, and management reporting. Starts empty so the operator can enter real thesis data from day one."
+version = "1.0.0"
+id = "artifacts/staytrack"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20194
+
+[services.development]
+run = "pnpm --filter @workspace/staytrack run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/staytrack", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/staytrack/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20194"
+BASE_PATH = "/"

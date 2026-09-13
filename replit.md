@@ -1,10 +1,13 @@
-# [Project name]
+# StayTrack Property Operations
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+StayTrack is a thesis-ready property operations workspace for recording occupancy, finance, maintenance, projections, scenarios, and cooperative activity without preloaded sample records.
 
 ## Run & Operate
 
 - `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/staytrack run dev` — run the StayTrack web app
+- `pnpm --filter @workspace/staytrack run typecheck` — typecheck the StayTrack frontend
+- `pnpm --filter @workspace/staytrack run build` — create the Netlify-ready static build
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
@@ -22,15 +25,21 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/staytrack/src/App.tsx` — StayTrack routes, local-first data model, forms, calculations, and reports
+- `artifacts/staytrack/src/index.css` — StayTrack visual theme and responsive shell styles
+- `artifacts/staytrack/src/assets/` — supplied StayTrack logo and login background assets
+- `netlify.toml` — direct static deployment settings for Netlify
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The first build is local-first: records and the operator session are stored in browser localStorage so the app can deploy as a static Netlify site without seeded data.
+- All operational collections start empty; dashboards and derived reports show intentional empty states until the operator enters source records.
+- Settings includes JSON export/import and reset so thesis data can move between browsers and be cleared safely.
+- The supplied logo is used on the login screen and the supplied property photo is used as its background.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+The app covers locations, units, bookings, income, expenses, cash flow, budget vs actual, projections, profitability, location analysis, maintenance, peak/off-peak performance, monthly summaries, scenario analysis, cooperative/member records, reports, and workspace settings.
 
 ## User preferences
 
@@ -38,7 +47,8 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- The current static deployment stores data per browser. A shared multi-user cloud database and production auth provider can be connected in a later phase.
+- Do not add sample or template records to the initial data store.
 
 ## Pointers
 
